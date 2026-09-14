@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', [dashboardController::class, 'dashboard'])->name('dashboard');
 // Route::get('/anggota', [MasterController::class, 'anggota'])->name('master.anggota');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [dashboardController::class, 'dashboard'])
+        ->name('dashboard');
+});
+
 Route::livewire('/', 'master.users.index')
     ->name('users.index');
 // Route::middleware(['auth'])->group(function () {

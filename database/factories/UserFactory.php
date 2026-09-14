@@ -79,7 +79,13 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'role_id' => Role::query()->inRandomOrder()->value('id'),
+            'role_id' => Role::query()->firstOrCreate(
+                ['code' => 'MASTER'],
+                [
+                    'name' => 'Master',
+                    'description' => 'System Master',
+                ]
+            )->id,
             'name' => fake()->name(),
             'username' => fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
