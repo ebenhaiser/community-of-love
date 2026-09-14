@@ -1,101 +1,112 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
-    <head>
-        @include('partials.head')
-    </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-            <flux:sidebar.header>
-                <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
-                <flux:sidebar.collapse class="lg:hidden" />
-            </flux:sidebar.header>
+<div class="sidebar-wrapper" id="sidebar">
+    <!-- Brand Logo / Identity -->
+    <a href="index.html" class="sidebar-brand">
+        <!-- <i class="bi bi-asterisk"></i> -->
+        <span>Community of Love</span>
+    </a>
 
-            <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Platform')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
-                    </flux:sidebar.item>
-                </flux:sidebar.group>
-            </flux:sidebar.nav>
+    <!-- Navigation Menu -->
+    <div class="flex-grow-1 overflow-y-auto">
+        <!-- Group: Menu -->
+        <div class="sidebar-menu-section">
+            <div class="sidebar-menu-title">Menu</div>
+            <ul class="sidebar-menu-list">
+                <li class="sidebar-menu-item">
+                    <a href="{{ route('master.users.index') }}" class="sidebar-menu-link active" id="menu-overview"
+                        title="Overview">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>users</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{{ route('master.cools.index') }}" class="sidebar-menu-link active" id="menu-overview"
+                        title="Overview">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>cools</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{{ route('master.members.index') }}" class="sidebar-menu-link active" id="menu-overview"
+                        title="Overview">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>members</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{{ route('master.event-types.index') }}" class="sidebar-menu-link active"
+                        id="menu-overview" title="Overview">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>event-type</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{{ route('master.ref-settings.index') }}" class="sidebar-menu-link active"
+                        id="menu-overview" title="Overview">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>ref-settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-            <flux:spacer />
+        <!-- Group: Components -->
+        <!-- <div class="sidebar-menu-section">
+        <div class="sidebar-menu-title">Components</div>
+        <ul class="sidebar-menu-list">
+          <li class="sidebar-menu-item">
+            <a href="tables-basic.html" class="sidebar-menu-link" id="menu-basictables" title="Basic Tables">
+              <i class="bi bi-table"></i>
+              <span>Basic Tables</span>
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+            <a href="ui-forms.html" class="sidebar-menu-link" id="menu-uiforms" title="Forms and Input">
+              <i class="bi bi-input-cursor-text"></i>
+              <span>Forms & Input</span>
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+            <a href="ui-buttons.html" class="sidebar-menu-link" id="menu-uibuttons" title="Buttons">
+              <i class="bi bi-menu-button-wide-fill"></i>
+              <span>Buttons & Alerts</span>
+            </a>
+          </li>
+        </ul>
+      </div> -->
 
-            <flux:sidebar.nav>
-                <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                    {{ __('Repository') }}
-                </flux:sidebar.item>
+        <!-- Group: Pages -->
+        <!-- <div class="sidebar-menu-section">
+        <div class="sidebar-menu-title">Pages</div>
+        <ul class="sidebar-menu-list">
+          <li class="sidebar-menu-item">
+            <a href="page-blank.html" class="sidebar-menu-link" id="menu-blankpage" title="Blank Page">
+              <i class="bi bi-file-earmark"></i>
+              <span>Blank Page</span>
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+            <a href="page-login.html" class="sidebar-menu-link" id="menu-loginpage" title="Login Page">
+              <i class="bi bi-box-arrow-in-right"></i>
+              <span>Login Screen</span>
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+            <a href="page-404.html" class="sidebar-menu-link" id="menu-404" title="404 Page">
+              <i class="bi bi-slash-circle"></i>
+              <span>Error 404</span>
+            </a>
+          </li>
+        </ul>
+      </div> -->
+    </div>
 
-                <flux:sidebar.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                    {{ __('Documentation') }}
-                </flux:sidebar.item>
-            </flux:sidebar.nav>
-
-            <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
-        </flux:sidebar>
-
-        <!-- Mobile User Menu -->
-        <flux:header class="lg:hidden">
-            <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
-
-            <flux:spacer />
-
-            <flux:dropdown position="top" align="end">
-                <flux:profile
-                    :initials="auth()->user()->initials()"
-                    icon-trailing="chevron-down"
-                />
-
-                <flux:menu>
-                    <flux:menu.radio.group>
-                        <div class="p-0 text-sm font-normal">
-                            <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                                <flux:avatar
-                                    :name="auth()->user()->name"
-                                    :initials="auth()->user()->initials()"
-                                />
-
-                                <div class="grid flex-1 text-start text-sm leading-tight">
-                                    <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
-                                    <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
-                                </div>
-                            </div>
-                        </div>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <flux:menu.radio.group>
-                        <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
-                            {{ __('Settings') }}
-                        </flux:menu.item>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <form method="POST" action="{{ route('logout') }}" class="w-full">
-                        @csrf
-                        <flux:menu.item
-                            as="button"
-                            type="submit"
-                            icon="arrow-right-start-on-rectangle"
-                            class="w-full cursor-pointer"
-                            data-test="logout-button"
-                        >
-                            {{ __('Log out') }}
-                        </flux:menu.item>
-                    </form>
-                </flux:menu>
-            </flux:dropdown>
-        </flux:header>
-
-        {{ $slot }}
-
-        @persist('toast')
-            <flux:toast.group>
-                <flux:toast />
-            </flux:toast.group>
-        @endpersist
-
-        @fluxScripts
-    </body>
-</html>
+    <!-- Sidebar Profile Card (Dynamic Footer) -->
+    <!-- <div class="sidebar-profile">
+      <img src="assets/images/avatar.png" alt="Administrator" class="sidebar-profile-img"
+        onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
+      <div class="sidebar-profile-info">
+        <div class="sidebar-profile-name">Administrator</div>
+        <div class="sidebar-profile-email">admin@email.com</div>
+      </div>
+    </div> -->
+</div>

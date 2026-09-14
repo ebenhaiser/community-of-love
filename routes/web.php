@@ -11,6 +11,27 @@ use App\Http\Controllers\MasterController;
 // });
 
 Route::get('/', [dashboardController::class, 'dashboard'])->name('dashboard');
-Route::get('/anggota', [MasterController::class, 'anggota'])->name('master.anggota');
+// Route::get('/anggota', [MasterController::class, 'anggota'])->name('master.anggota');
 
-require __DIR__.'/settings.php';
+// Route::middleware(['auth'])->group(function () {
+
+Route::prefix('master')->name('master.')->group(function () {
+
+    Route::livewire('/users', 'master.users.index')
+        ->name('users.index');
+
+    Route::livewire('/cools', 'master.cools.index')
+        ->name('cools.index');
+
+    Route::livewire('/members', 'master.members.index')
+        ->name('members.index');
+
+    Route::livewire('/event-types', 'master.event-types.index')
+        ->name('event-types.index');
+
+    Route::livewire('/ref-settings', 'master.ref-settings.index')
+        ->name('ref-settings.index');
+});
+// });
+
+require __DIR__ . '/settings.php';

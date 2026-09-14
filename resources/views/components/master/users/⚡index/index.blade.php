@@ -1,4 +1,4 @@
 
 <div>
-    {{-- Happiness is not something readymade. It comes from your own actions. - Dalai Lama --}}
+    {{-- An unexamined life is not worth living. - Socrates --}}
 </div>

@@ -10,4 +10,9 @@ class MasterController extends Controller
     {
         return view('master.anggota');
     }
+
+    public function users()
+    {
+        return view('master.users');
+    }
 }
