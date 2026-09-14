@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\MasterController;
+use Illuminate\Support\Facades\Route;
 
 // Route::view('/', 'welcome')->name('home');
 
@@ -10,9 +10,10 @@ use App\Http\Controllers\MasterController;
 //     Route::view('dashboard', 'dashboard')->name('dashboard');
 // });
 
-Route::get('/', [dashboardController::class, 'dashboard'])->name('dashboard');
+// Route::get('/', [dashboardController::class, 'dashboard'])->name('dashboard');
 // Route::get('/anggota', [MasterController::class, 'anggota'])->name('master.anggota');
-
+Route::livewire('/', 'master.users.index')
+    ->name('users.index');
 // Route::middleware(['auth'])->group(function () {
 
 Route::prefix('master')->name('master.')->group(function () {

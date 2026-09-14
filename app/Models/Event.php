@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'event_type_id',
@@ -31,32 +34,50 @@ class Event extends Model
         ];
     }
 
-    public function eventType()
+    /**
+     * @return BelongsTo<EventType, $this>
+     */
+    public function eventType(): BelongsTo
     {
         return $this->belongsTo(EventType::class);
     }
 
-    public function cools()
+    /**
+     * @return BelongsToMany<Cool, $this>
+     */
+    public function cools(): BelongsToMany
     {
         return $this->belongsToMany(Cool::class, 'event_cools');
     }
 
-    public function attendances()
+    /**
+     * @return HasMany<Attendance, $this>
+     */
+    public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class);
     }
 
-    public function attachments()
+    /**
+     * @return MorphMany<Attachment, $this>
+     */
+    public function attachments(): MorphMany
     {
         return $this->morphMany(Attachment::class, 'attachable');
     }
 
-    public function creator()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function updater()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function updater(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by');
     }

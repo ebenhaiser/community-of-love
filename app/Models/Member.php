@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'member_code',
@@ -31,22 +32,34 @@ class Member extends Model
         ];
     }
 
-    public function memberships()
+    /**
+     * @return HasMany<CoolMembership, $this>
+     */
+    public function memberships(): HasMany
     {
         return $this->hasMany(CoolMembership::class);
     }
 
-    public function account()
+    /**
+     * @return HasOne<MemberAccount, $this>
+     */
+    public function account(): HasOne
     {
         return $this->hasOne(MemberAccount::class);
     }
 
-    public function attendances()
+    /**
+     * @return HasMany<Attendance, $this>
+     */
+    public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class);
     }
 
-    public function messages()
+    /**
+     * @return HasMany<Message, $this>
+     */
+    public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
     }

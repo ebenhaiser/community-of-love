@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cool extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -18,34 +20,52 @@ class Cool extends Model
         'status',
     ];
 
-    public function gembalas()
+    /**
+     * @return HasMany<CoolGembala, $this>
+     */
+    public function gembalas(): HasMany
     {
         return $this->hasMany(CoolGembala::class);
     }
 
-    public function activeGembala()
+    /**
+     * @return HasOne<CoolGembala, $this>
+     */
+    public function activeGembala(): HasOne
     {
         return $this->hasOne(CoolGembala::class)
             ->where('status', 'ACTIVE')
             ->latestOfMany();
     }
 
-    public function access()
+    /**
+     * @return HasOne<CoolAccess, $this>
+     */
+    public function access(): HasOne
     {
         return $this->hasOne(CoolAccess::class);
     }
 
-    public function memberships()
+    /**
+     * @return HasMany<CoolMembership, $this>
+     */
+    public function memberships(): HasMany
     {
         return $this->hasMany(CoolMembership::class);
     }
 
-    public function events()
+    /**
+     * @return BelongsToMany<Event, $this>
+     */
+    public function events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class, 'event_cools');
     }
 
-    public function messages()
+    /**
+     * @return HasMany<Message, $this>
+     */
+    public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
     }

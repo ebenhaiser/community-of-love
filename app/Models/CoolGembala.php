@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CoolGembala extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'cool_id',
@@ -26,12 +26,18 @@ class CoolGembala extends Model
         ];
     }
 
-    public function cool()
+    /**
+     * @return BelongsTo<Cool, $this>
+     */
+    public function cool(): BelongsTo
     {
         return $this->belongsTo(Cool::class);
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

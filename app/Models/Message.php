@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'cool_id',
@@ -26,22 +27,34 @@ class Message extends Model
         ];
     }
 
-    public function cool()
+    /**
+     * @return BelongsTo<Cool, $this>
+     */
+    public function cool(): BelongsTo
     {
         return $this->belongsTo(Cool::class);
     }
 
-    public function member()
+    /**
+     * @return BelongsTo<Member, $this>
+     */
+    public function member(): BelongsTo
     {
         return $this->belongsTo(Member::class);
     }
 
-    public function reader()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function reader(): BelongsTo
     {
         return $this->belongsTo(User::class, 'read_by');
     }
 
-    public function attachments()
+    /**
+     * @return MorphMany<Attachment, $this>
+     */
+    public function attachments(): MorphMany
     {
         return $this->morphMany(Attachment::class, 'attachable');
     }

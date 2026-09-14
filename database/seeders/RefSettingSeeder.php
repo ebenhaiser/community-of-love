@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\RefSetting;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RefSettingSeeder extends Seeder

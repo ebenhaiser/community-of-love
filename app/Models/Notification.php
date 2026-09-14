@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Notification extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'notifiable_type',
@@ -28,7 +28,10 @@ class Notification extends Model
         ];
     }
 
-    public function notifiable()
+    /**
+     * @return MorphTo<Model, $this>
+     */
+    public function notifiable(): MorphTo
     {
         return $this->morphTo();
     }

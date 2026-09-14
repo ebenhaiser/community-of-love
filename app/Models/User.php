@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
+    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
@@ -35,42 +39,66 @@ class User extends Authenticatable
         ];
     }
 
-    public function role()
+    /**
+     * @return BelongsTo<Role, $this>
+     */
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
     }
 
-    public function coolGembalas()
+    /**
+     * @return HasMany<CoolGembala, $this>
+     */
+    public function coolGembalas(): HasMany
     {
         return $this->hasMany(CoolGembala::class);
     }
 
-    public function createdEvents()
+    /**
+     * @return HasMany<Event, $this>
+     */
+    public function createdEvents(): HasMany
     {
         return $this->hasMany(Event::class, 'created_by');
     }
 
-    public function updatedEvents()
+    /**
+     * @return HasMany<Event, $this>
+     */
+    public function updatedEvents(): HasMany
     {
         return $this->hasMany(Event::class, 'updated_by');
     }
 
-    public function recordedAttendances()
+    /**
+     * @return HasMany<Attendance, $this>
+     */
+    public function recordedAttendances(): HasMany
     {
         return $this->hasMany(Attendance::class, 'recorded_by');
     }
 
-    public function createdAttachments()
+    /**
+     * @return HasMany<Attachment, $this>
+     */
+    public function createdAttachments(): HasMany
     {
         return $this->hasMany(Attachment::class, 'created_by');
     }
 
-    public function readMessages()
+    /**
+     * @return HasMany<Message, $this>
+     */
+    public function readMessages(): HasMany
     {
         return $this->hasMany(Message::class, 'read_by');
     }
 
-    public function auditTrails()
+    /**
+     * @return HasMany<AuditTrail, $this>
+     */
+    public function auditTrails(): HasMany
     {
         return $this->hasMany(AuditTrail::class);
     }
